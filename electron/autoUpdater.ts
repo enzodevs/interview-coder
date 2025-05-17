@@ -16,11 +16,11 @@ export function initAutoUpdater() {
     return
   }
 
-  // Configure auto updater
-  autoUpdater.autoDownload = true
-  autoUpdater.autoInstallOnAppQuit = true
-  autoUpdater.allowDowngrade = true
-  autoUpdater.allowPrerelease = true
+  // Configure auto updater with improved security
+  autoUpdater.autoDownload = false // Disabled for security - require user consent
+  autoUpdater.autoInstallOnAppQuit = false // Disabled for security
+  autoUpdater.allowDowngrade = false // Prevent potential security issues with downgrades
+  autoUpdater.allowPrerelease = false // Use stable releases only
 
   // Enable more verbose logging
   autoUpdater.logger = log

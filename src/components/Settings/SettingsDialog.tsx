@@ -184,6 +184,7 @@ export function SettingsDialog({ open: externalOpen, onOpenChange }: SettingsDia
   const [extractionModel, setExtractionModel] = useState("gpt-4o");
   const [solutionModel, setSolutionModel] = useState("gpt-4o");
   const [debuggingModel, setDebuggingModel] = useState("gpt-4o");
+  const [mode, setMode] = useState<"code" | "english">("code"); // Mode for code or English exercises
   const [isLoading, setIsLoading] = useState(false);
   const { showToast } = useToast();
 
@@ -213,6 +214,7 @@ export function SettingsDialog({ open: externalOpen, onOpenChange }: SettingsDia
         extractionModel?: string;
         solutionModel?: string;
         debuggingModel?: string;
+        mode?: "code" | "english";
       }
 
       window.electronAPI
@@ -223,6 +225,7 @@ export function SettingsDialog({ open: externalOpen, onOpenChange }: SettingsDia
           setExtractionModel(config.extractionModel || "gpt-4o");
           setSolutionModel(config.solutionModel || "gpt-4o");
           setDebuggingModel(config.debuggingModel || "gpt-4o");
+          setMode(config.mode || "code");
         })
         .catch((error: unknown) => {
           console.error("Failed to load config:", error);
@@ -263,6 +266,7 @@ export function SettingsDialog({ open: externalOpen, onOpenChange }: SettingsDia
         extractionModel,
         solutionModel,
         debuggingModel,
+        mode, // Include mode in the config
       });
       
       if (result) {
@@ -457,6 +461,53 @@ export function SettingsDialog({ open: externalOpen, onOpenChange }: SettingsDia
             </div>
           </div>
           
+          {/* Mode Selection */}
+          <div className="space-y-2 mt-4">
+            <label className="text-sm font-medium text-white mb-2 block">Exercise Mode</label>
+            <div className="flex gap-2">
+              <div
+                className={`flex-1 p-2 rounded-lg cursor-pointer transition-colors ${
+                  mode === "code"
+                    ? "bg-white/10 border border-white/20"
+                    : "bg-black/30 border border-white/5 hover:bg-white/5"
+                }`}
+                onClick={() => setMode("code")}
+              >
+                <div className="flex items-center gap-2">
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      mode === "code" ? "bg-white" : "bg-white/20"
+                    }`}
+                  />
+                  <div className="flex flex-col">
+                    <p className="font-medium text-white text-sm">Coding Mode</p>
+                    <p className="text-xs text-white/60">For programming problems</p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`flex-1 p-2 rounded-lg cursor-pointer transition-colors ${
+                  mode === "english"
+                    ? "bg-white/10 border border-white/20"
+                    : "bg-black/30 border border-white/5 hover:bg-white/5"
+                }`}
+                onClick={() => setMode("english")}
+              >
+                <div className="flex items-center gap-2">
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      mode === "english" ? "bg-white" : "bg-white/20"
+                    }`}
+                  />
+                  <div className="flex flex-col">
+                    <p className="font-medium text-white text-sm">English Mode</p>
+                    <p className="text-xs text-white/60">For language exercises</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="space-y-2 mt-4">
             <label className="text-sm font-medium text-white mb-2 block">Keyboard Shortcuts</label>
             <div className="bg-black/30 border border-white/10 rounded-lg p-3">

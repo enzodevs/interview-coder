@@ -50,5 +50,43 @@
 - Fixed functionality within the existing UI rather than adding new elements
 - Kept the settings accessible through the gear icon menu
 
+## Latest Improvements (May 2025)
+
+### Security Enhancements
+
+1. **Secure Encryption Key Management**:
+   - Modified `electron/store.ts` to generate and use a secure random encryption key
+   - The key is stored locally in the user's app data directory with restrictive permissions
+   - This ensures sensitive information like API keys are properly encrypted at rest
+
+2. **Auto-Updater Security**:
+   - Disabled automatic downloads and installations in `electron/autoUpdater.ts`
+   - Changed to manual confirmation flow for updates to prevent potential security issues
+   - Disabled insecure options like allowDowngrade and prerelease versions
+
+### Extended Functionality for English Exercises
+
+1. **Mode Selection**:
+   - Added a new mode selector in Settings Dialog to switch between "Code" and "English" modes
+   - The mode is persisted in the configuration
+
+2. **Enhanced Processing Logic**:
+   - Modified `ProcessingHelper.ts` to handle English language exercises
+   - Added specialized prompts for analyzing English exercises
+   - Implemented different output parsing for English mode to properly structure responses
+   - Adapted solution generation to provide comprehensive English language assistance
+
+3. **User Interface**:
+   - Added UI toggle in Settings Dialog to easily switch between Code and English modes
+   - Maintained a consistent interface while supporting both types of exercises
+
+### Improved Startup Process
+
+1. **Desktop Shortcut Creation**:
+   - Added `create-desktop-shortcut.bat` to automatically create a desktop shortcut
+   - The shortcut launches the application in stealth mode without requiring terminal
+   - Proper icon and description for better Windows integration
+   - Eliminates the need to keep a terminal window open
+
 These changes fix the issues while preserving the original app's look and feel, just removing the payment restrictions and making everything work properly.
 
